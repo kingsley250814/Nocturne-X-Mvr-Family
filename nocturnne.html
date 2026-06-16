@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOCTURNE x MVR FAMILY — Two Legends. One Family.</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-glow: #ff2a1f;
+    --red-dim: #7a1a12;
+    --blue: #1a6fd4;
+    --blue-glow: #00aaff;
+    --blue-dim: #0e3d6e;
+    --silver: #b8c5d0;
+    --white: #e8edf2;
+    --black: #050709;
+    --dark: #0a0c10;
+    --mid: #0f1318;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Exo 2', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* === PARTICLES === */
+  #particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+  }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: linear-gradient(180deg, rgba(5,7,9,0.98) 0%, rgba(5,7,9,0.7) 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--red-glow), var(--silver), var(--blue-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: var(--silver);
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--blue-glow);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 20% 50%, rgba(192,57,43,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(0,170,255,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 60%);
+  }
+
+  .hero-split-line {
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 70%, transparent);
+    transform: translateX(-50%);
+  }
+
+  .hero-banner {
+    width: min(780px, 92vw);
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 60px rgba(0,0,0,0.8));
+    animation: bannerIn 1.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes bannerIn {
+    from { opacity: 0; transform: scale(0.9) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .hero-tag {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--silver);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-sub {
+    margin-top: 36px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(184,197,208,0.7);
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-red {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red-glow);
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    box-shadow: 0 0 20px rgba(192,57,43,0.2), inset 0 0 20px rgba(192,57,43,0.05);
+  }
+  .btn-red:hover {
+    background: rgba(192,57,43,0.15);
+    box-shadow: 0 0 40px rgba(255,42,31,0.4), inset 0 0 30px rgba(255,42,31,0.1);
+    color: #fff;
+  }
+  .btn-blue {
+    background: transparent;
+    border: 1px solid var(--blue);
+    color: var(--blue-glow);
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    box-shadow: 0 0 20px rgba(26,111,212,0.2), inset 0 0 20px rgba(26,111,212,0.05);
+  }
+  .btn-blue:hover {
+    background: rgba(26,111,212,0.15);
+    box-shadow: 0 0 40px rgba(0,170,255,0.4), inset 0 0 30px rgba(0,170,255,0.1);
+    color: #fff;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.4;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .scroll-hint span {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--silver);
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1px solid var(--silver);
+    border-bottom: 1px solid var(--silver);
+    transform: rotate(45deg);
+  }
+  @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+
+  /* === SECTIONS BASE === */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 40px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .eyebrow-red { color: var(--red-glow); }
+  .eyebrow-blue { color: var(--blue-glow); }
+  .eyebrow-silver { color: var(--silver); }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  /* === ABOUT SPLIT === */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    max-width: 1200px;
+    margin: 60px auto 0;
+  }
+
+  .about-card {
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-size: 30px 30px;
+  }
+  .card-red {
+    border: 1px solid rgba(192,57,43,0.3);
+    background: linear-gradient(135deg, rgba(192,57,43,0.08) 0%, transparent 60%);
+    border-right: none;
+  }
+  .card-red::before {
+    background-image: radial-gradient(circle, var(--red) 1px, transparent 1px);
+  }
+  .card-blue {
+    border: 1px solid rgba(26,111,212,0.3);
+    background: linear-gradient(225deg, rgba(26,111,212,0.08) 0%, transparent 60%);
+    border-left: none;
+  }
+  .card-blue::before {
+    background-image: radial-gradient(circle, var(--blue) 1px, transparent 1px);
+  }
+
+  .about-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .about-divider::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 70%, transparent);
+  }
+  .divider-x {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--white);
+    background: var(--dark);
+    padding: 12px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+  }
+
+  .cc-tag {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    padding: 5px 12px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .tag-red {
+    background: rgba(192,57,43,0.15);
+    border: 1px solid rgba(192,57,43,0.4);
+    color: var(--red-glow);
+  }
+  .tag-blue {
+    background: rgba(26,111,212,0.15);
+    border: 1px solid rgba(26,111,212,0.4);
+    color: var(--blue-glow);
+  }
+
+  .cc-name {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(22px, 3vw, 38px);
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .name-red { color: var(--red-glow); text-shadow: 0 0 30px rgba(255,42,31,0.4); }
+  .name-blue { color: var(--blue-glow); text-shadow: 0 0 30px rgba(0,170,255,0.4); }
+
+  .cc-founder {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--silver);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .cc-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(232,237,242,0.7);
+  }
+
+  .cc-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat { flex: 1; }
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+  .stat-num-red { color: var(--red-glow); }
+  .stat-num-blue { color: var(--blue-glow); }
+  .stat-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--silver);
+    text-transform: uppercase;
+  }
+
+  /* === FOUNDERS === */
+  .founders-section {
+    background: var(--mid);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .founders-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .founders-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .founder-card {
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s;
+  }
+  .founder-card:hover { transform: translateY(-4px); }
+
+  .founder-card-red {
+    background: linear-gradient(135deg, rgba(192,57,43,0.12) 0%, rgba(10,12,16,0.98) 50%);
+    border: 1px solid rgba(192,57,43,0.2);
+  }
+  .founder-card-blue {
+    background: linear-gradient(225deg, rgba(26,111,212,0.12) 0%, rgba(10,12,16,0.98) 50%);
+    border: 1px solid rgba(26,111,212,0.2);
+  }
+
+  .founder-glow-red {
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(192,57,43,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .founder-glow-blue {
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(26,111,212,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .founder-role {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--silver);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .founder-role::before {
+    content: '';
+    display: block;
+    width: 24px; height: 1px;
+  }
+  .role-red::before { background: var(--red-glow); }
+  .role-blue::before { background: var(--blue-glow); }
+
+  .founder-name {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .founder-cc {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .founder-cc-red { color: rgba(255,42,31,0.6); }
+  .founder-cc-blue { color: rgba(0,170,255,0.6); }
+
+  .founder-quote {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(232,237,242,0.65);
+    font-style: italic;
+    padding-left: 20px;
+    position: relative;
+  }
+  .founder-quote::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 2px;
+  }
+  .quote-red::before { background: var(--red); }
+  .quote-blue::before { background: var(--blue); }
+
+  /* === MANIFESTO === */
+  .manifesto-section {
+    text-align: center;
+    padding: 120px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto-section::before {
+    content: 'FAMILY';
+    position: absolute;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(80px, 18vw, 200px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .manifesto-lines {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .manifesto-line {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(18px, 3vw, 36px);
+    line-height: 1.6;
+    margin-bottom: 8px;
+    opacity: 0.15;
+    transition: opacity 0.3s, color 0.3s;
+  }
+  .manifesto-line:hover { opacity: 1; }
+  .ml-red:hover { color: var(--red-glow); text-shadow: 0 0 30px rgba(255,42,31,0.5); }
+  .ml-blue:hover { color: var(--blue-glow); text-shadow: 0 0 30px rgba(0,170,255,0.5); }
+  .ml-white { color: var(--white); opacity: 1 !important; font-size: clamp(24px, 4vw, 48px); }
+
+  /* === COLLAB SECTION === */
+  .collab-section {
+    background: linear-gradient(180deg, var(--dark) 0%, #06080b 100%);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .collab-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .collab-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .collab-card {
+    background: var(--dark);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .collab-card:hover { background: rgba(15,19,24,0.95); }
+
+  .collab-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .collab-card-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .collab-card-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(232,237,242,0.55);
+  }
+
+  .collab-accent {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    transform-origin: left;
+  }
+  .collab-card:hover .collab-accent { transform: scaleX(1); }
+  .accent-red { background: linear-gradient(90deg, var(--red), transparent); }
+  .accent-blue { background: linear-gradient(90deg, var(--blue), transparent); }
+  .accent-silver { background: linear-gradient(90deg, var(--silver), transparent); }
+
+  /* === JOIN === */
+  .join-section {
+    padding: 120px 40px;
+    text-align: center;
+    background: var(--mid);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .join-inner { max-width: 700px; margin: 0 auto; }
+
+  .join-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(28px, 5vw, 64px);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .join-desc {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(232,237,242,0.6);
+    margin-bottom: 48px;
+  }
+
+  .join-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* === FOOTER === */
+  footer {
+    padding: 48px 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, var(--red-glow), var(--silver), var(--blue-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(184,197,208,0.4);
+    text-transform: uppercase;
+  }
+
+  .footer-cc {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(184,197,208,0.3);
+  }
+
+  /* === LIGHTNING LINES === */
+  .lightning-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red-glow) 30%, var(--blue-glow) 70%, transparent);
+    opacity: 0.3;
+    margin: 0;
+  }
+
+  /* === REVEAL ANIMATIONS === */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 20px; }
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .about-divider { height: 60px; }
+    .about-divider::before { width: 100%; height: 1px; top: 50%; bottom: auto; }
+    .card-red, .card-blue { border: 1px solid rgba(255,255,255,0.1); }
+    .founders-grid { grid-template-columns: 1fr; gap: 2px; }
+    .collab-cards { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  /* === GLITCH EFFECT === */
+  @keyframes glitch {
+    0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 0); }
+    20% { clip-path: inset(92% 0 1% 0); transform: translate(1px, 0); }
+    40% { clip-path: inset(43% 0 1% 0); transform: translate(-1px, 0); }
+    60% { clip-path: inset(25% 0 58% 0); transform: translate(2px, 0); }
+    80% { clip-path: inset(54% 0 7% 0); transform: translate(-1px, 0); }
+    100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 0); }
+  }
+
+  .glitch-wrapper { position: relative; display: inline-block; }
+  .glitch-wrapper::before,
+  .glitch-wrapper::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    font: inherit;
+    color: inherit;
+  }
+  .glitch-wrapper::before {
+    color: var(--red-glow);
+    animation: glitch 4s infinite;
+    animation-delay: 0.1s;
+    opacity: 0.6;
+  }
+  .glitch-wrapper::after {
+    color: var(--blue-glow);
+    animation: glitch 4s infinite reverse;
+    animation-delay: 0.3s;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">NX × MVR</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#founders">Founders</a></li>
+    <li><a href="#manifesto">Manifesto</a></li>
+    <li><a href="#collab">Kolaborasi</a></li>
+    <li><a href="#join">Bergabung</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-split-line"></div>
+
+  <div class="hero-tag">Free Fire Indonesia · Community Collaboration</div>
+
+  
+
+  <div class="hero-sub">Different Paths · Same Purpose</div>
+
+  <div class="hero-ctas">
+    <a href="#about" class="btn btn-red">Nocturne Family</a>
+    <a href="#about" class="btn btn-blue">Maverick Area</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="lightning-line"></div>
+
+<!-- About -->
+<section id="about" style="padding-top: 120px;">
+  <div class="about-grid">
+    <!-- Nocturne -->
+    <div class="about-card card-red reveal">
+      <div class="cc-tag tag-red">Free Fire CC</div>
+      <div class="cc-name name-red">NOCTURNE</div>
+      <div class="cc-name name-red" style="font-size: clamp(14px,1.5vw,20px); margin-top: 4px;">FAMILY</div>
+      <div class="cc-founder">Didirikan oleh · <strong>Voidzx</strong></div>
+      <p class="cc-desc">
+        Lahir dari kegelapan, Nocturne Family adalah komunitas Free Fire yang tumbuh di bawah naungan naga merah yang tak terkalahkan. Kami adalah para pejuang malam yang menjunjung tinggi loyalitas, kehormatan, dan semangat juang tanpa batas.
+      </p>
+      <div class="cc-stats">
+        <div class="stat">
+          <div class="stat-num stat-num-red">10++</div>
+          <div class="stat-label">Anggota</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num stat-num-red">🐉</div>
+          <div class="stat-label">Simbol</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num stat-num-red">NX</div>
+          <div class="stat-label">Tag</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="about-divider">
+      <div class="divider-x">×</div>
+    </div>
+
+    <!-- MVR -->
+    <div class="about-card card-blue reveal">
+      <div class="cc-tag tag-blue">Free Fire CC</div>
+      <div class="cc-name name-blue">MAVERICK</div>
+      <div class="cc-name name-blue" style="font-size: clamp(14px,1.5vw,20px); margin-top: 4px;">AREA</div>
+      <div class="cc-founder">Didirikan oleh · <strong>Manzzyf</strong></div>
+      <p class="cc-desc">
+        Maverick Area berdiri tegak sebagai kekuatan biru yang memimpin dengan strategi dan kecerdasan. Dengan lambang mahkota dan sayap bersinar, kami adalah para maverick yang menetapkan standar baru dalam dunia esports Free Fire Indonesia.
+      </p>
+      <div class="cc-stats">
+        <div class="stat">
+          <div class="stat-num stat-num-blue">17</div>
+          <div class="stat-label">Anggota</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num stat-num-blue">👑</div>
+          <div class="stat-label">Simbol</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num stat-num-blue">MVR</div>
+          <div class="stat-label">Tag</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lightning-line"></div>
+
+<!-- Founders -->
+<section id="founders" class="founders-section">
+  <div class="founders-header reveal">
+    <div class="section-eyebrow eyebrow-silver">The Architects</div>
+    <div class="section-title">Para Pendiri</div>
+  </div>
+
+  <div class="founders-grid">
+    <!-- Voidzx -->
+    <div class="founder-card founder-card-red reveal">
+      <div class="founder-glow-red"></div>
+      <div class="founder-role role-red">Pendiri &amp; Pemimpin · Nocturne Family</div>
+      <div class="founder-name name-red">
+        <span class="glitch-wrapper" data-text="VOIDZX">VOIDZX</span>
+      </div>
+      <div class="founder-cc founder-cc-red">Nocturne Family · NX</div>
+      <p class="founder-quote quote-red">
+        "Kegelapan bukan hambatan — itu adalah kekuatan kami. Nocturne bukan sekadar komunitas, ini adalah keluarga yang berdiri saat yang lain terjatuh. Di bawah naga, kami satu."
+      </p>
+    </div>
+
+    <!-- Manzzyf -->
+    <div class="founder-card founder-card-blue reveal">
+      <div class="founder-glow-blue"></div>
+      <div class="founder-role role-blue">Pendiri &amp; Pemimpin · Maverick Area</div>
+      <div class="founder-name name-blue">
+        <span class="glitch-wrapper" data-text="MANZZYF">MANZZYF</span>
+      </div>
+      <div class="founder-cc founder-cc-blue">Maverick Area · MVR</div>
+      <p class="founder-quote quote-blue">
+        "Seorang maverick tidak mengikuti aturan yang sudah ada — ia menciptakan aturan baru. MVR berdiri untuk membuktikan bahwa strategi dan keberanian adalah kombinasi yang tak terkalahkan."
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="lightning-line"></div>
+
+<!-- Manifesto -->
+<section id="manifesto" class="manifesto-section">
+  <div class="manifesto-lines">
+    <div class="section-eyebrow eyebrow-silver" style="margin-bottom: 48px;">— Manifesto —</div>
+    <div class="manifesto-line ml-red">DUA LEGENDA</div>
+    <div class="manifesto-line ml-blue">DUA WARISAN</div>
+    <div class="manifesto-line ml-red">DUA KEKUATAN</div>
+    <div class="manifesto-line ml-white">SATU KELUARGA</div>
+    <div class="manifesto-line ml-blue" style="margin-top: 32px;">JALUR BERBEDA</div>
+    <div class="manifesto-line ml-red">TUJUAN YANG SAMA</div>
+    <div class="manifesto-line ml-white" style="margin-top: 32px; font-size: clamp(14px,2vw,24px); opacity:0.5; font-weight:400; font-family:'Rajdhani',sans-serif; letter-spacing:4px;">
+      — NOCTURNE × MVR FAMILY —
+    </div>
+  </div>
+</section>
+
+<div class="lightning-line"></div>
+
+<!-- Collab -->
+<section id="collab" class="collab-section">
+  <div class="collab-header reveal">
+    <div class="section-eyebrow eyebrow-silver">Bersama Kita Lebih Kuat</div>
+    <div class="section-title">Apa yang Kami Bawa</div>
+  </div>
+
+  <div class="collab-cards">
+    <div class="collab-card reveal">
+      <span class="collab-icon">⚔️</span>
+      <div class="collab-card-title" style="color: var(--red-glow);">Scrimmage &amp; War</div>
+      <p class="collab-card-desc">Pertandingan internal antara anggota Nocturne dan MVR untuk mengasah kemampuan tempur dan strategi tim secara konsisten.</p>
+      <div class="collab-accent accent-red"></div>
+    </div>
+    <div class="collab-card reveal">
+      <span class="collab-icon">🤝</span>
+      <div class="collab-card-title" style="color: var(--white);">Kolaborasi Event</div>
+      <p class="collab-card-desc">Kedua CC bergabung untuk mengadakan event bersama — tournament, giveaway, dan sesi gameplay yang epik untuk seluruh komunitas.</p>
+      <div class="collab-accent accent-silver"></div>
+    </div>
+    <div class="collab-card reveal">
+      <span class="collab-icon">🏆</span>
+      <div class="collab-card-title" style="color: var(--blue-glow);">Esports Growth</div>
+      <p class="collab-card-desc">Bersama kami mendukung anggota untuk berkembang ke level profesional melalui coaching, review gameplay, dan network esports Indonesia.</p>
+      <div class="collab-accent accent-blue"></div>
+    </div>
+    <div class="collab-card reveal">
+      <span class="collab-icon">🔥</span>
+      <div class="collab-card-title" style="color: var(--red-glow);">Brotherhood</div>
+      <p class="collab-card-desc">Lebih dari sekadar game — kami adalah saudara. Solidaritas antar anggota, saling mendukung dalam dan luar game.</p>
+      <div class="collab-accent accent-red"></div>
+    </div>
+    <div class="collab-card reveal">
+      <span class="collab-icon">📡</span>
+      <div class="collab-card-title" style="color: var(--white);">Content &amp; Stream</div>
+      <p class="collab-card-desc">Creator dari kedua CC berkolaborasi dalam konten Free Fire — highlights, streaming bersama, dan konten edukatif untuk pemain Indonesia.</p>
+      <div class="collab-accent accent-silver"></div>
+    </div>
+    <div class="collab-card reveal">
+      <span class="collab-icon">👑</span>
+      <div class="collab-card-title" style="color: var(--blue-glow);">Rekrutmen Terbuka</div>
+      <p class="collab-card-desc">Pintu selalu terbuka. Bergabunglah dengan keluarga yang terus berkembang — pilih jalanmu: Nocturne atau Maverick Area.</p>
+      <div class="collab-accent accent-blue"></div>
+    </div>
+  </div>
+</section>
+
+<div class="lightning-line"></div>
+
+<!-- Join -->
+<section id="join" class="join-section">
+  <div class="join-inner">
+    <div class="join-title reveal">
+      <span style="color: var(--red-glow);">SIAP</span>
+      <span style="color: var(--white);"> BERGABUNG</span><br>
+      <span style="color: var(--blue-glow);">KELUARGA</span><span style="color: var(--white);">?</span>
+    </div>
+    <p class="join-desc reveal">
+      Dua legends, satu keluarga. Pilih jalanmu dan jadilah bagian dari sesuatu yang lebih besar dari sekadar permainan. Nocturne Family atau Maverick Area — keduanya adalah rumah bagimu.
+    </p>
+    <div class="join-btns reveal">
+      <a href="#" class="btn btn-red">Daftar Nocturne</a>
+      <a href="#" class="btn btn-blue">Daftar MVR</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">NOCTURNE × MVR FAMILY</div>
+  <div class="footer-tagline">Two Legends · One Family</div>
+  <div class="footer-cc">© 2025 Voidzx & Manzzyf · Free Fire Indonesia</div>
+</footer>
+
+<script>
+// === PARTICLES ===
+(function() {
+  const container = document.getElementById('particles');
+  const colors = [
+    'rgba(192,57,43,0.8)', 'rgba(255,42,31,0.6)',
+    'rgba(26,111,212,0.8)', 'rgba(0,170,255,0.6)',
+    'rgba(184,197,208,0.4)'
+  ];
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const left = Math.random() * 100;
+    const duration = Math.random() * 15 + 10;
+    const delay = Math.random() * 15;
+    p.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      left: ${left}%;
+      animation-duration: ${duration}s;
+      animation-delay: ${delay}s;
+      box-shadow: 0 0 ${size * 3}px ${color};
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// === SCROLL REVEAL ===
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+// === MANIFESTO LINES REVEAL ===
+const mlObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const lines = entry.target.querySelectorAll('.manifesto-line');
+      lines.forEach((line, i) => {
+        setTimeout(() => {
+          line.style.opacity = line.classList.contains('ml-white') ? '1' : '0.15';
+          line.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            if (!line.classList.contains('ml-white')) {
+              // subtle pulsing opacity for non-white lines
+            }
+          }, 500);
+        }, i * 150);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+const manifestoSection = document.querySelector('.manifesto-section');
+if (manifestoSection) mlObserver.observe(manifestoSection);
+
+// === NAV scroll effect ===
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(5,7,9,0.97)';
+    nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+  } else {
+    nav.style.background = '';
+    nav.style.borderBottomColor = '';
+  }
+});
+</script>
+</body>
+</html>
